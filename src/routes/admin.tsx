@@ -127,49 +127,57 @@ function AdminPanel() {
               </tr>
             </thead>
             <tbody>
-              {rows.map((r) => (
-                <tr key={r.id} className="border-t transition-smooth hover:bg-muted/30">
-                  <td className="px-5 py-3 font-mono text-xs text-muted-foreground">
-                    {r.id}
-                  </td>
-                  <td className="px-5 py-3">
-                    <p className="font-semibold">{r.student}</p>
-                    <p className="text-xs text-muted-foreground">{r.roll}</p>
-                  </td>
-                  <td className="px-5 py-3">{r.item}</td>
-                  <td className="px-5 py-3">
-                    <StatusBadge status={r.type} />
-                  </td>
-                  <td className="px-5 py-3 text-muted-foreground">{r.location}</td>
-                  <td className="px-5 py-3 text-muted-foreground">{r.date}</td>
-                  <td className="px-5 py-3">
-                    <StatusBadge status={r.state} />
-                  </td>
-                  <td className="px-5 py-3">
-                    <div className="flex items-center justify-end gap-1">
-                      <IconBtn label="View"><Eye className="h-3.5 w-3.5" /></IconBtn>
-                      <IconBtn label="Approve" tone="success">
-                        <Check className="h-3.5 w-3.5" />
-                      </IconBtn>
-                      <IconBtn label="Reject" tone="warning">
-                        <X className="h-3.5 w-3.5" />
-                      </IconBtn>
-                      <IconBtn label="Delete" tone="destructive">
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </IconBtn>
-                    </div>
+              {rows.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="px-5 py-12 text-center text-sm text-muted-foreground">
+                    No submissions yet. New student reports will appear here for moderation.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                rows.map((r) => (
+                  <tr key={r.id} className="border-t transition-smooth hover:bg-muted/30">
+                    <td className="px-5 py-3 font-mono text-xs text-muted-foreground">
+                      {r.id}
+                    </td>
+                    <td className="px-5 py-3">
+                      <p className="font-semibold">{r.student}</p>
+                      <p className="text-xs text-muted-foreground">{r.roll}</p>
+                    </td>
+                    <td className="px-5 py-3">{r.item}</td>
+                    <td className="px-5 py-3">
+                      <StatusBadge status={r.type} />
+                    </td>
+                    <td className="px-5 py-3 text-muted-foreground">{r.location}</td>
+                    <td className="px-5 py-3 text-muted-foreground">{r.date}</td>
+                    <td className="px-5 py-3">
+                      <StatusBadge status={r.state} />
+                    </td>
+                    <td className="px-5 py-3">
+                      <div className="flex items-center justify-end gap-1">
+                        <IconBtn label="View"><Eye className="h-3.5 w-3.5" /></IconBtn>
+                        <IconBtn label="Approve" tone="success">
+                          <Check className="h-3.5 w-3.5" />
+                        </IconBtn>
+                        <IconBtn label="Reject" tone="warning">
+                          <X className="h-3.5 w-3.5" />
+                        </IconBtn>
+                        <IconBtn label="Delete" tone="destructive">
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </IconBtn>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
         <div className="flex items-center justify-between border-t px-5 py-3 text-xs text-muted-foreground">
-          <p>Showing 5 of 342 records</p>
+          <p>Showing {rows.length} of {rows.length} records</p>
           <div className="flex gap-1">
-            <Button size="sm" variant="outline">Previous</Button>
-            <Button size="sm" variant="outline">Next</Button>
+            <Button size="sm" variant="outline" disabled={rows.length === 0}>Previous</Button>
+            <Button size="sm" variant="outline" disabled={rows.length === 0}>Next</Button>
           </div>
         </div>
       </div>
