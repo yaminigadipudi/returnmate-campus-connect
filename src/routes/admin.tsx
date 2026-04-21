@@ -19,65 +19,27 @@ export const Route = createFileRoute("/admin")({
   component: AdminPanel,
 });
 
+// Statistics start at zero and grow only with real student activity.
 const tabs = [
-  { id: "users", label: "Users", icon: Users, count: 2438 },
-  { id: "lost", label: "Lost Items", icon: PackageSearch, count: 342 },
-  { id: "found", label: "Found Items", icon: PackageCheck, count: 287 },
-  { id: "reports", label: "Reports", icon: Flag, count: 12 },
+  { id: "users", label: "Users", icon: Users, count: 0 },
+  { id: "lost", label: "Lost Items", icon: PackageSearch, count: 0 },
+  { id: "found", label: "Found Items", icon: PackageCheck, count: 0 },
+  { id: "reports", label: "Reports", icon: Flag, count: 0 },
 ] as const;
 
-const rows = [
-  {
-    id: "#RM-1042",
-    student: "Sneha Patil",
-    roll: "22951A0498",
-    item: "Casio Calculator",
-    type: "found" as const,
-    location: "Mechanical Lab",
-    date: "Apr 19, 2026",
-    state: "matched" as const,
-  },
-  {
-    id: "#RM-1041",
-    student: "Aarav Reddy",
-    roll: "22951A0512",
-    item: "Black Leather Wallet",
-    type: "lost" as const,
-    location: "Library",
-    date: "Apr 19, 2026",
-    state: "pending" as const,
-  },
-  {
-    id: "#RM-1040",
-    student: "Priya Sharma",
-    roll: "22951A0455",
-    item: "AirPods Pro Case",
-    type: "lost" as const,
-    location: "Auditorium",
-    date: "Apr 18, 2026",
-    state: "approved" as const,
-  },
-  {
-    id: "#RM-1039",
-    student: "Rahul Kumar",
-    roll: "22951A0521",
-    item: "Blue Water Bottle",
-    type: "found" as const,
-    location: "CS Block",
-    date: "Apr 18, 2026",
-    state: "pending" as const,
-  },
-  {
-    id: "#RM-1038",
-    student: "Arjun Mehra",
-    roll: "22951A0612",
-    item: "Silver Wristwatch",
-    type: "found" as const,
-    location: "Canteen",
-    date: "Apr 17, 2026",
-    state: "approved" as const,
-  },
-];
+type ModerationRow = {
+  id: string;
+  student: string;
+  roll: string;
+  item: string;
+  type: "lost" | "found";
+  location: string;
+  date: string;
+  state: "pending" | "approved" | "matched";
+};
+
+// Moderation queue is empty until real submissions arrive.
+const rows: ModerationRow[] = [];
 
 function AdminPanel() {
   const [active, setActive] = useState<(typeof tabs)[number]["id"]>("lost");
