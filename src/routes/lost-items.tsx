@@ -14,38 +14,8 @@ interface LostItem extends Item {
   claimed: boolean;
 }
 
-const initialItems: LostItem[] = [
-  {
-    id: "1",
-    title: "Black Leather Wallet",
-    description: "Contains student ID and a few cards. Last seen near library entrance.",
-    location: "Central Library",
-    time: "2h ago",
-    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&q=80",
-    status: "lost",
-    claimed: false,
-  },
-  {
-    id: "2",
-    title: "Casio Scientific Calculator",
-    description: "fx-991ES Plus with name 'Sneha' written on the back.",
-    location: "Mechanical Lab",
-    time: "Yesterday",
-    image: "https://images.unsplash.com/photo-1564473185935-58113cba1e80?w=600&q=80",
-    status: "lost",
-    claimed: false,
-  },
-  {
-    id: "3",
-    title: "ID Card — 22951A05XX",
-    description: "Lost near the parking lot during evening hours.",
-    location: "Parking Block B",
-    time: "3 days ago",
-    image: "https://images.unsplash.com/photo-1606293459339-aa5d34a7b0e1?w=600&q=80",
-    status: "lost",
-    claimed: false,
-  },
-];
+// Real data only — items appear here once students report them via "Report Lost".
+const initialItems: LostItem[] = [];
 
 const filters = ["All", "Unclaimed", "Claimed"] as const;
 
