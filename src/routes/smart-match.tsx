@@ -64,8 +64,7 @@ function SmartMatchPage() {
     <AppLayout>
       <PageHeader
         title="Smart Match"
-        description="Automatically detected matches between Lost and Found items based on name, description, and location similarity."
-        icon={Sparkles}
+        subtitle="Automatically detected matches between Lost and Found items based on name, description, and location similarity."
       />
 
       {/* Summary + threshold */}
