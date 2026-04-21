@@ -12,7 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReportLostRouteImport } from './routes/report-lost'
 import { Route as ReportFoundRouteImport } from './routes/report-found'
 import { Route as MessagesRouteImport } from './routes/messages'
-import { Route as MatchesRouteImport } from './routes/matches'
+import { Route as LostItemsRouteImport } from './routes/lost-items'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
@@ -32,9 +32,9 @@ const MessagesRoute = MessagesRouteImport.update({
   path: '/messages',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MatchesRoute = MatchesRouteImport.update({
-  id: '/matches',
-  path: '/matches',
+const LostItemsRoute = LostItemsRouteImport.update({
+  id: '/lost-items',
+  path: '/lost-items',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -57,7 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/dashboard': typeof DashboardRoute
-  '/matches': typeof MatchesRoute
+  '/lost-items': typeof LostItemsRoute
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
@@ -66,7 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/dashboard': typeof DashboardRoute
-  '/matches': typeof MatchesRoute
+  '/lost-items': typeof LostItemsRoute
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
@@ -76,7 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
   '/dashboard': typeof DashboardRoute
-  '/matches': typeof MatchesRoute
+  '/lost-items': typeof LostItemsRoute
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
@@ -87,7 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/dashboard'
-    | '/matches'
+    | '/lost-items'
     | '/messages'
     | '/report-found'
     | '/report-lost'
@@ -96,7 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/dashboard'
-    | '/matches'
+    | '/lost-items'
     | '/messages'
     | '/report-found'
     | '/report-lost'
@@ -105,7 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/dashboard'
-    | '/matches'
+    | '/lost-items'
     | '/messages'
     | '/report-found'
     | '/report-lost'
@@ -115,7 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
   DashboardRoute: typeof DashboardRoute
-  MatchesRoute: typeof MatchesRoute
+  LostItemsRoute: typeof LostItemsRoute
   MessagesRoute: typeof MessagesRoute
   ReportFoundRoute: typeof ReportFoundRoute
   ReportLostRoute: typeof ReportLostRoute
@@ -144,11 +144,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MessagesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/matches': {
-      id: '/matches'
-      path: '/matches'
-      fullPath: '/matches'
-      preLoaderRoute: typeof MatchesRouteImport
+    '/lost-items': {
+      id: '/lost-items'
+      path: '/lost-items'
+      fullPath: '/lost-items'
+      preLoaderRoute: typeof LostItemsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -179,7 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
   DashboardRoute: DashboardRoute,
-  MatchesRoute: MatchesRoute,
+  LostItemsRoute: LostItemsRoute,
   MessagesRoute: MessagesRoute,
   ReportFoundRoute: ReportFoundRoute,
   ReportLostRoute: ReportLostRoute,
