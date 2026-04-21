@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SmartMatchRouteImport } from './routes/smart-match'
 import { Route as ReportLostRouteImport } from './routes/report-lost'
 import { Route as ReportFoundRouteImport } from './routes/report-found'
 import { Route as MessagesRouteImport } from './routes/messages'
@@ -17,6 +18,11 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SmartMatchRoute = SmartMatchRouteImport.update({
+  id: '/smart-match',
+  path: '/smart-match',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ReportLostRoute = ReportLostRouteImport.update({
   id: '/report-lost',
   path: '/report-lost',
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
+  '/smart-match': typeof SmartMatchRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
+  '/smart-match': typeof SmartMatchRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRoute
   '/report-found': typeof ReportFoundRoute
   '/report-lost': typeof ReportLostRoute
+  '/smart-match': typeof SmartMatchRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/report-found'
     | '/report-lost'
+    | '/smart-match'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/report-found'
     | '/report-lost'
+    | '/smart-match'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/report-found'
     | '/report-lost'
+    | '/smart-match'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,10 +131,18 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRoute
   ReportFoundRoute: typeof ReportFoundRoute
   ReportLostRoute: typeof ReportLostRoute
+  SmartMatchRoute: typeof SmartMatchRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/smart-match': {
+      id: '/smart-match'
+      path: '/smart-match'
+      fullPath: '/smart-match'
+      preLoaderRoute: typeof SmartMatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/report-lost': {
       id: '/report-lost'
       path: '/report-lost'
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRoute,
   ReportFoundRoute: ReportFoundRoute,
   ReportLostRoute: ReportLostRoute,
+  SmartMatchRoute: SmartMatchRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

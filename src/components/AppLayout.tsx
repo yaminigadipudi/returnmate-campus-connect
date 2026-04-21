@@ -9,6 +9,7 @@ import {
   LogOut,
   Bell,
   Search,
+  Sparkles,
 } from "lucide-react";
 import { Brand } from "./Brand";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/lost-items", label: "Lost Items", icon: ListChecks },
+  { to: "/smart-match", label: "Smart Match", icon: Sparkles },
   { to: "/report-lost", label: "Report Lost", icon: PackageSearch },
   { to: "/report-found", label: "Report Found", icon: PackageCheck },
   { to: "/messages", label: "Messages", icon: MessageSquare },
