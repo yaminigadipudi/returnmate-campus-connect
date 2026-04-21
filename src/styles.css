@@ -6,7 +6,7 @@
 
 /*
  * ReturnMate — IARE Lost & Found Management System
- * Design system: Deep Maroon × Soft Gold × Off-White
+ * Design system: Navy Blue (#0B3C5D) × Grey (#2F2F2F / #6B7280) × Off-White
  * All colors in oklch. Use semantic tokens only.
  */
 
@@ -56,30 +56,30 @@
 :root {
   --radius: 0.75rem;
 
-  /* Surfaces — warm off-white */
-  --background: oklch(0.98 0.005 60);
-  --foreground: oklch(0.22 0.01 30);
+  /* Surfaces — clean off-white */
+  --background: oklch(0.98 0.003 240);
+  --foreground: oklch(0.22 0.02 240);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.01 30);
+  --card-foreground: oklch(0.22 0.02 240);
 
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.01 30);
+  --popover-foreground: oklch(0.22 0.02 240);
 
-  /* Primary — Deep Maroon (#800000) */
-  --primary: oklch(0.38 0.16 25);
-  --primary-foreground: oklch(0.98 0.005 60);
-  --primary-glow: oklch(0.48 0.18 25);
+  /* Primary — Navy Blue (#0B3C5D) */
+  --primary: oklch(0.36 0.07 235);
+  --primary-foreground: oklch(0.98 0.003 240);
+  --primary-glow: oklch(0.48 0.09 232);
 
-  /* Secondary — Dark Grey (#2F2F2F) */
-  --secondary: oklch(0.94 0.005 30);
-  --secondary-foreground: oklch(0.28 0.005 30);
+  /* Secondary — Grey (#2F2F2F / #6B7280) */
+  --secondary: oklch(0.94 0.003 240);
+  --secondary-foreground: oklch(0.28 0.005 240);
 
-  --muted: oklch(0.95 0.005 60);
-  --muted-foreground: oklch(0.5 0.01 30);
+  --muted: oklch(0.95 0.003 240);
+  --muted-foreground: oklch(0.5 0.01 240);
 
-  --accent: oklch(0.95 0.02 60);
-  --accent-foreground: oklch(0.38 0.16 25);
+  --accent: oklch(0.94 0.02 235);
+  --accent-foreground: oklch(0.36 0.07 235);
 
   /* Gold accent — for Matched status & highlights */
   --gold: oklch(0.78 0.13 80);
@@ -87,39 +87,39 @@
 
   /* Status colors */
   --destructive: oklch(0.55 0.21 27);
-  --destructive-foreground: oklch(0.98 0.005 60);
+  --destructive-foreground: oklch(0.98 0.003 240);
   --success: oklch(0.58 0.15 150);
-  --success-foreground: oklch(0.98 0.005 60);
+  --success-foreground: oklch(0.98 0.003 240);
   --warning: oklch(0.78 0.13 80);
   --warning-foreground: oklch(0.25 0.05 60);
 
-  --border: oklch(0.9 0.005 30);
-  --input: oklch(0.92 0.005 30);
-  --ring: oklch(0.38 0.16 25);
+  --border: oklch(0.9 0.005 240);
+  --input: oklch(0.92 0.005 240);
+  --ring: oklch(0.36 0.07 235);
 
-  /* Sidebar — deep maroon */
-  --sidebar: oklch(0.28 0.12 25);
-  --sidebar-foreground: oklch(0.95 0.01 60);
-  --sidebar-accent: oklch(0.35 0.14 25);
-  --sidebar-accent-foreground: oklch(0.98 0.005 60);
-  --sidebar-border: oklch(0.32 0.13 25);
+  /* Sidebar — navy blue */
+  --sidebar: oklch(0.28 0.06 235);
+  --sidebar-foreground: oklch(0.95 0.01 240);
+  --sidebar-accent: oklch(0.36 0.07 235);
+  --sidebar-accent-foreground: oklch(0.98 0.003 240);
+  --sidebar-border: oklch(0.32 0.06 235);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, oklch(0.38 0.16 25), oklch(0.48 0.18 25));
+  --gradient-primary: linear-gradient(135deg, oklch(0.36 0.07 235), oklch(0.48 0.09 232));
   --gradient-hero: linear-gradient(
     135deg,
-    oklch(0.32 0.14 25) 0%,
-    oklch(0.38 0.16 25) 50%,
-    oklch(0.45 0.13 30) 100%
+    oklch(0.28 0.06 235) 0%,
+    oklch(0.36 0.07 235) 50%,
+    oklch(0.42 0.08 230) 100%
   );
   --gradient-gold: linear-gradient(135deg, oklch(0.82 0.13 85), oklch(0.72 0.14 70));
-  --gradient-surface: linear-gradient(180deg, oklch(0.99 0.005 60), oklch(0.96 0.008 60));
+  --gradient-surface: linear-gradient(180deg, oklch(0.99 0.003 240), oklch(0.96 0.005 240));
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 oklch(0.38 0.16 25 / 0.05);
-  --shadow-md: 0 4px 12px -2px oklch(0.38 0.16 25 / 0.08);
-  --shadow-lg: 0 12px 32px -8px oklch(0.38 0.16 25 / 0.18);
-  --shadow-glow: 0 8px 32px -4px oklch(0.48 0.18 25 / 0.35);
+  --shadow-sm: 0 1px 2px 0 oklch(0.36 0.07 235 / 0.05);
+  --shadow-md: 0 4px 12px -2px oklch(0.36 0.07 235 / 0.08);
+  --shadow-lg: 0 12px 32px -8px oklch(0.36 0.07 235 / 0.18);
+  --shadow-glow: 0 8px 32px -4px oklch(0.48 0.09 232 / 0.35);
   --shadow-gold: 0 8px 24px -6px oklch(0.78 0.13 80 / 0.45);
 
   --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);

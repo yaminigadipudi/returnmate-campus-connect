@@ -1,6 +1,7 @@
+import { useState, type ChangeEvent } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { Button } from "@/components/ui/button";
-import { Upload, MapPin, Calendar, FileText } from "lucide-react";
+import { Upload, MapPin, Calendar, FileText, X } from "lucide-react";
 
 interface ReportFormProps {
   kind: "lost" | "found";
@@ -24,6 +25,21 @@ const locations = [
 
 export function ReportForm({ kind, title, subtitle }: ReportFormProps) {
   const isLost = kind === "lost";
+  const [images, setImages] = useState<string[]>([]);
+
+  const MAX_IMAGES = 3;
+
+  const handleFiles = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files ?? []);
+    const slots = MAX_IMAGES - images.length;
+    const next = files.slice(0, slots).map((f) => URL.createObjectURL(f));
+    setImages((prev) => [...prev, ...next]);
+    e.target.value = "";
+  };
+
+  const removeImage = (idx: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== idx));
+  };
 
   return (
     <>
@@ -79,13 +95,54 @@ export function ReportForm({ kind, title, subtitle }: ReportFormProps) {
             )}
 
             <div className="md:col-span-2">
-              <Label icon={Upload}>Upload Image</Label>
-              <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-muted/40 px-6 py-10 text-center transition-smooth hover:border-primary hover:bg-accent">
-                <Upload className="h-6 w-6 text-primary" />
-                <p className="text-sm font-semibold">Click to upload or drag &amp; drop</p>
-                <p className="text-xs text-muted-foreground">PNG, JPG up to 5MB</p>
-                <input type="file" accept="image/*" className="hidden" />
-              </label>
+              <Label icon={Upload}>
+                Upload Images <span className="ml-1 font-normal text-muted-foreground">({images.length}/{MAX_IMAGES})</span>
+              </Label>
+
+              {images.length > 0 && (
+                <div className="mb-3 grid grid-cols-3 gap-2">
+                  {images.map((src, idx) => (
+                    <div
+                      key={src}
+                      className="group relative aspect-square overflow-hidden rounded-lg border bg-muted"
+                    >
+                      <img src={src} alt={`Upload ${idx + 1}`} className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removeImage(idx)}
+                        className="absolute right-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-smooth hover:bg-destructive group-hover:opacity-100"
+                        aria-label="Remove image"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                      {idx === 0 && (
+                        <span className="absolute bottom-1.5 left-1.5 rounded bg-primary px-1.5 py-0.5 text-[10px] font-semibold text-primary-foreground">
+                          Cover
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {images.length < MAX_IMAGES && (
+                <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-border bg-muted/40 px-6 py-8 text-center transition-smooth hover:border-primary hover:bg-accent">
+                  <Upload className="h-6 w-6 text-primary" />
+                  <p className="text-sm font-semibold">
+                    Click to upload or drag &amp; drop
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Up to {MAX_IMAGES} photos · PNG, JPG · 5MB each
+                  </p>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFiles}
+                    className="hidden"
+                  />
+                </label>
+              )}
             </div>
           </div>
 

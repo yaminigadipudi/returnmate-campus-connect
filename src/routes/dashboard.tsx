@@ -19,7 +19,7 @@ interface ClaimedItem {
   claimedBy: string;
   rollNumber: string;
   mobile: string;
-  status: "Approved" | "Pending" | "Handed Over";
+  status: "Pending Verification" | "Returned" | "Claimed";
 }
 
 // Real activity — populated only when users actually claim items.
@@ -27,9 +27,9 @@ interface ClaimedItem {
 const claimedItems: ClaimedItem[] = [];
 
 const statusStyles: Record<ClaimedItem["status"], string> = {
-  Approved: "bg-success/15 text-success",
-  Pending: "bg-warning/15 text-warning",
-  "Handed Over": "bg-gold/20 text-gold-foreground",
+  Claimed: "bg-primary/15 text-primary",
+  "Pending Verification": "bg-warning/15 text-warning-foreground",
+  Returned: "bg-success/15 text-success",
 };
 
 function Dashboard() {
@@ -119,7 +119,7 @@ function Dashboard() {
                       <span
                         className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyles[c.status]}`}
                       >
-                        {c.status === "Pending" ? <Clock className="h-3 w-3" /> : <CheckCircle2 className="h-3 w-3" />}
+                        {c.status === "Pending Verification" ? <Clock className="h-3 w-3" /> : <CheckCircle2 className="h-3 w-3" />}
                         {c.status}
                       </span>
                     </td>

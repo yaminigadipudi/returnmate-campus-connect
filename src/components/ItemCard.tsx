@@ -1,6 +1,6 @@
 import { MapPin, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { StatusBadge } from "./StatusBadge";
+import { StatusBadge, type ItemStatus } from "./StatusBadge";
 
 export interface Item {
   id: string;
@@ -9,7 +9,8 @@ export interface Item {
   location: string;
   time: string;
   image: string;
-  status: "lost" | "found" | "matched";
+  images?: string[];
+  status: ItemStatus;
   match?: number;
 }
 
@@ -25,6 +26,11 @@ export function ItemCard({ item, action }: { item: Item; action?: React.ReactNod
         <div className="absolute left-3 top-3">
           <StatusBadge status={item.status} />
         </div>
+        {item.images && item.images.length > 1 && (
+          <div className="absolute right-3 top-3 rounded-full bg-card/90 px-2 py-0.5 text-[11px] font-semibold text-foreground shadow-sm backdrop-blur">
+            +{item.images.length - 1} photos
+          </div>
+        )}
         {item.match !== undefined && (
           <div className="absolute bottom-3 left-3 right-3 rounded-lg bg-card/95 p-2 backdrop-blur">
             <div className="mb-1 flex items-center justify-between text-xs font-semibold">
