@@ -9,8 +9,44 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ReportLostRouteImport } from './routes/report-lost'
+import { Route as ReportFoundRouteImport } from './routes/report-found'
+import { Route as MessagesRouteImport } from './routes/messages'
+import { Route as MatchesRouteImport } from './routes/matches'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 
+const ReportLostRoute = ReportLostRouteImport.update({
+  id: '/report-lost',
+  path: '/report-lost',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReportFoundRoute = ReportFoundRouteImport.update({
+  id: '/report-found',
+  path: '/report-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchesRoute = MatchesRouteImport.update({
+  id: '/matches',
+  path: '/matches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +55,116 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/dashboard': typeof DashboardRoute
+  '/matches': typeof MatchesRoute
+  '/messages': typeof MessagesRoute
+  '/report-found': typeof ReportFoundRoute
+  '/report-lost': typeof ReportLostRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/dashboard': typeof DashboardRoute
+  '/matches': typeof MatchesRoute
+  '/messages': typeof MessagesRoute
+  '/report-found': typeof ReportFoundRoute
+  '/report-lost': typeof ReportLostRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
+  '/dashboard': typeof DashboardRoute
+  '/matches': typeof MatchesRoute
+  '/messages': typeof MessagesRoute
+  '/report-found': typeof ReportFoundRoute
+  '/report-lost': typeof ReportLostRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/dashboard'
+    | '/matches'
+    | '/messages'
+    | '/report-found'
+    | '/report-lost'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/admin'
+    | '/dashboard'
+    | '/matches'
+    | '/messages'
+    | '/report-found'
+    | '/report-lost'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/dashboard'
+    | '/matches'
+    | '/messages'
+    | '/report-found'
+    | '/report-lost'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
+  DashboardRoute: typeof DashboardRoute
+  MatchesRoute: typeof MatchesRoute
+  MessagesRoute: typeof MessagesRoute
+  ReportFoundRoute: typeof ReportFoundRoute
+  ReportLostRoute: typeof ReportLostRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/report-lost': {
+      id: '/report-lost'
+      path: '/report-lost'
+      fullPath: '/report-lost'
+      preLoaderRoute: typeof ReportLostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/report-found': {
+      id: '/report-found'
+      path: '/report-found'
+      fullPath: '/report-found'
+      preLoaderRoute: typeof ReportFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/matches': {
+      id: '/matches'
+      path: '/matches'
+      fullPath: '/matches'
+      preLoaderRoute: typeof MatchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,7 +177,22 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
+  DashboardRoute: DashboardRoute,
+  MatchesRoute: MatchesRoute,
+  MessagesRoute: MessagesRoute,
+  ReportFoundRoute: ReportFoundRoute,
+  ReportLostRoute: ReportLostRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
