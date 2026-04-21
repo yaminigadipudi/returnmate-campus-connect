@@ -1,33 +1,35 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { AppLayout } from "@/components/AppLayout";
 import { PageHeader } from "@/components/PageHeader";
-import { ItemCard } from "@/components/ItemCard";
-import { sampleItems } from "@/data/items";
 import { Button } from "@/components/ui/button";
 import {
   PackageSearch,
   PackageCheck,
-  Sparkles,
-  TrendingUp,
-  ArrowUpRight,
+  CheckCircle2,
+  Clock,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
 });
 
-const stats = [
-  { label: "Lost reports", value: "342", trend: "+12%", icon: PackageSearch, tone: "destructive" },
-  { label: "Found items", value: "287", trend: "+18%", icon: PackageCheck, tone: "success" },
-  { label: "Successful matches", value: "1,180", trend: "+24%", icon: Sparkles, tone: "gold" },
-  { label: "Active this week", value: "94", trend: "+6%", icon: TrendingUp, tone: "primary" },
-];
+interface ClaimedItem {
+  id: string;
+  itemName: string;
+  claimedBy: string;
+  rollNumber: string;
+  mobile: string;
+  status: "Approved" | "Pending" | "Handed Over";
+}
 
-const toneClass: Record<string, string> = {
-  destructive: "bg-destructive/10 text-destructive",
-  success: "bg-success/10 text-success",
-  gold: "bg-gold/20 text-gold-foreground",
-  primary: "bg-primary/10 text-primary",
+// Real activity — populated only when users actually claim items.
+// Starts empty; entries appear here as claims are made through the system.
+const claimedItems: ClaimedItem[] = [];
+
+const statusStyles: Record<ClaimedItem["status"], string> = {
+  Approved: "bg-success/15 text-success",
+  Pending: "bg-warning/15 text-warning",
+  "Handed Over": "bg-gold/20 text-gold-foreground",
 };
 
 function Dashboard() {
@@ -66,43 +68,97 @@ function Dashboard() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="mb-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map(({ label, value, trend, icon: Icon, tone }) => (
-          <div
-            key={label}
-            className="rounded-xl border bg-card p-5 shadow-soft transition-smooth hover:shadow-elegant"
-          >
-            <div className="mb-3 flex items-center justify-between">
-              <span className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${toneClass[tone]}`}>
-                <Icon className="h-5 w-5" />
-              </span>
-              <span className="inline-flex items-center gap-0.5 text-xs font-semibold text-success">
-                {trend} <ArrowUpRight className="h-3 w-3" />
-              </span>
-            </div>
-            <p className="font-display text-2xl font-bold">{value}</p>
-            <p className="text-xs text-muted-foreground">{label}</p>
-          </div>
-        ))}
-      </section>
-
-      {/* Recent posts */}
+      {/* Claimed lost items */}
       <PageHeader
-        title="Recent campus posts"
-        subtitle="Latest lost and found items reported across IARE."
+        title="Claimed Lost Items"
+        subtitle="Real activity — track which lost items have been claimed by students."
         action={
           <Button variant="outline" asChild>
-            <Link to="/matches">View all</Link>
+            <Link to="/lost-items">View all lost items</Link>
           </Button>
         }
       />
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {sampleItems.map((item) => (
-          <ItemCard key={item.id} item={item} />
-        ))}
-      </div>
+      {claimedItems.length === 0 ? (
+        <div className="rounded-2xl border bg-card p-12 text-center shadow-soft">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <CheckCircle2 className="h-6 w-6" />
+          </div>
+          <h3 className="font-display text-lg font-semibold">No claims yet</h3>
+          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            When students claim lost items through the system, their details
+            will appear here. Head over to{" "}
+            <Link to="/lost-items" className="font-semibold text-primary hover:underline">
+              Lost Items
+            </Link>{" "}
+            to get started.
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Desktop table */}
+          <div className="hidden overflow-hidden rounded-2xl border bg-card shadow-soft md:block">
+            <table className="w-full text-sm">
+              <thead className="bg-muted/60 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                <tr>
+                  <th className="px-5 py-3">Item Name</th>
+                  <th className="px-5 py-3">Claimed By</th>
+                  <th className="px-5 py-3">Roll Number</th>
+                  <th className="px-5 py-3">Mobile</th>
+                  <th className="px-5 py-3">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {claimedItems.map((c) => (
+                  <tr key={c.id} className="border-t transition-smooth hover:bg-muted/30">
+                    <td className="px-5 py-3 font-medium">{c.itemName}</td>
+                    <td className="px-5 py-3">{c.claimedBy}</td>
+                    <td className="px-5 py-3 font-mono text-xs">{c.rollNumber}</td>
+                    <td className="px-5 py-3 font-mono text-xs">{c.mobile}</td>
+                    <td className="px-5 py-3">
+                      <span
+                        className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold ${statusStyles[c.status]}`}
+                      >
+                        {c.status === "Pending" ? <Clock className="h-3 w-3" /> : <CheckCircle2 className="h-3 w-3" />}
+                        {c.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile cards */}
+          <div className="grid gap-3 md:hidden">
+            {claimedItems.map((c) => (
+              <div key={c.id} className="rounded-xl border bg-card p-4 shadow-soft">
+                <div className="mb-2 flex items-start justify-between gap-2">
+                  <p className="font-display font-semibold">{c.itemName}</p>
+                  <span
+                    className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${statusStyles[c.status]}`}
+                  >
+                    {c.status}
+                  </span>
+                </div>
+                <div className="space-y-1 text-xs text-muted-foreground">
+                  <p>
+                    <span className="font-semibold text-foreground">Claimed by:</span> {c.claimedBy}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-foreground">Roll:</span>{" "}
+                    <span className="font-mono">{c.rollNumber}</span>
+                  </p>
+                  <p>
+                    <span className="font-semibold text-foreground">Mobile:</span>{" "}
+                    <span className="font-mono">{c.mobile}</span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </AppLayout>
   );
 }

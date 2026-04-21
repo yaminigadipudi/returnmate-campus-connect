@@ -3,7 +3,7 @@ import {
   LayoutDashboard,
   PackageSearch,
   PackageCheck,
-  FileText,
+  ListChecks,
   MessageSquare,
   ShieldCheck,
   LogOut,
@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/lost-items", label: "Lost Items", icon: ListChecks },
   { to: "/report-lost", label: "Report Lost", icon: PackageSearch },
   { to: "/report-found", label: "Report Found", icon: PackageCheck },
-  { to: "/matches", label: "My Posts & Matches", icon: FileText },
   { to: "/messages", label: "Messages", icon: MessageSquare },
   { to: "/admin", label: "Admin Panel", icon: ShieldCheck },
 ] as const;
